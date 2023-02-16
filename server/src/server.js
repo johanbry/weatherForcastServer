@@ -11,5 +11,5 @@ const cors_1 = __importDefault(require("cors"));
 const weather_router_1 = __importDefault(require("./routes/weather.router"));
 const port = process.env.PORT || '3000';
 app.use((0, cors_1.default)());
-app.use('/api/weather/', weather_router_1.default);
+app.use('/api/weather', weather_router_1.default);
 app.listen(port, () => console.log(`Server is up and running, listening on port ${port}`));

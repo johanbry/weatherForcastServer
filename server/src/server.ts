@@ -9,7 +9,7 @@ import weatherRouter from './routes/weather.router';
 const port: string = process.env.PORT || '3000';
 
 app.use(cors());
-app.use('/api/weather/', weatherRouter);
+app.use('/api/weather', weatherRouter);
 
 app.listen(port, () =>
   console.log(`Server is up and running, listening on port ${port}`)

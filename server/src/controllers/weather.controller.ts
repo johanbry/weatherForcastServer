@@ -8,9 +8,11 @@ export const getCurrentWeather = async (
   next: NextFunction
 ) => {
   try {
+    const { mode } = req.query;
+
     const { lat, long } = req.params;
     if (!lat || !long) throw Error('Missing coordinates');
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=${process.env.API_KEY}`;
+    let url = `https://api.openweathermap.org/data/2.5/${mode}?lat=${lat}&lon=${long}&units=metric&appid=${process.env.API_KEY}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -21,3 +23,7 @@ export const getCurrentWeather = async (
     res.status(500).end();
   }
 };
+
+// api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=metric&appid={API key}
+
+// http://localhost:3000/api/weather/lat/lon?timeframe='current'
