@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import fs from 'fs/promises';
-import db from '../server';
+import { getConnection } from '../db/connect.db';
 
 export const getCities = async (
   req: Request,
@@ -24,6 +24,37 @@ export const getCities = async (
   }
 };
 
-// export const getFilteredCities = () => {
-//   db.collection()
-// }
+export const getFilteredCities = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const city = req.query.city as string;
+
+    const db = getConnection();
+    const collection = db.collection('cities');
+    const cities = await collection
+      .aggregate([
+        {
+          $search: {
+            compound: {
+              filter: city.split(' ').map((word: string) => ({
+                autocomplete: {
+                  query: word,
+                  path: 'name',
+                },
+              })),
+            },
+          },
+        },
+        //{ $sort: { name: 1 } },
+        { $limit: 20 },
+      ])
+      .toArray();
+
+    res.status(200).json(cities);
+  } catch (err) {
+    console.log(err);
+  }
+};

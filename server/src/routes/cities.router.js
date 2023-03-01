@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const cityRouter = express_1.default.Router();
 const cities_controller_1 = require("../controllers/cities.controller");
 cityRouter.get('/', cities_controller_1.getCities);
+cityRouter.get('/filter', cities_controller_1.getFilteredCities);
 exports.default = cityRouter;
