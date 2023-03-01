@@ -34,6 +34,7 @@ exports.getCities = getCities;
 const getFilteredCities = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const city = req.query.city;
+        console.log('city queryu: ', city);
         const db = (0, connect_db_1.getConnection)();
         const collection = db.collection('cities');
         const cities = yield collection

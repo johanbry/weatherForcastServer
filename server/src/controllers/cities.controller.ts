@@ -31,6 +31,7 @@ export const getFilteredCities = async (
 ) => {
   try {
     const city = req.query.city as string;
+    console.log('city queryu: ', city);
 
     const db = getConnection();
     const collection = db.collection('cities');
