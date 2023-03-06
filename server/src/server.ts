@@ -24,3 +24,6 @@ app.use('/api/cities', cityRouter);
     console.log(err, 'Kunde inte skapa databaskoppling');
   }
 })();
+
+// TODO: Kolla igeonoom och ta bort kommentarer
+// TODO: Skapa middleware för felhantering
