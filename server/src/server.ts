@@ -6,7 +6,8 @@ import cors from 'cors';
 
 import weatherRouter from './routes/weather.router';
 import cityRouter from './routes/cities.router';
-import { getDb, connectToDb } from './db/connect.db';
+import { createConnection } from './db/connect.db';
+import { Db } from 'mongodb';
 
 const port: string = process.env.PORT || '3000';
 
@@ -14,17 +15,15 @@ app.use(cors());
 app.use('/api/weather', weatherRouter);
 app.use('/api/cities', cityRouter);
 
-let db;
-
-connectToDb((err: Error) => {
-  // If we don't have an error we listen to request.
-  if (!err) {
-    app.listen(port, () =>
-      console.log(`Server is up and running, listening on port ${port}`)
-    );
+// connect to db and start server
+(async () => {
+  try {
+    await createConnection();
+    app.listen(port, () => console.log(`Server listens on port ${port}`));
+  } catch (err) {
+    console.log(err, 'Kunde inte skapa databaskoppling');
   }
-  db = getDb();
-  console.log(db);
-});
+})();
 
-export default db;
+// TODO: Kolla igeonoom och ta bort kommentarer
+// TODO: Skapa middleware för felhantering

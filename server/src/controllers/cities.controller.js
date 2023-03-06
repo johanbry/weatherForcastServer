@@ -12,8 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCities = void 0;
+exports.getFilteredCities = exports.getCities = void 0;
 const promises_1 = __importDefault(require("fs/promises"));
+const connect_db_1 = require("../db/connect.db");
 const getCities = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const dataPath = 'city.list.json';
     try {
@@ -30,6 +31,34 @@ const getCities = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.getCities = getCities;
-// export const getFilteredCities = () => {
-//   db.collection()
-// }
+const getFilteredCities = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const city = req.query.city;
+        console.log('city queryu: ', city);
+        const db = (0, connect_db_1.getConnection)();
+        const collection = db.collection('cities');
+        const cities = yield collection
+            .aggregate([
+            {
+                $search: {
+                    compound: {
+                        filter: city.split(' ').map((word) => ({
+                            autocomplete: {
+                                query: word,
+                                path: 'name',
+                            },
+                        })),
+                    },
+                },
+            },
+            //{ $sort: { name: 1 } },
+            { $limit: 20 },
+        ])
+            .toArray();
+        res.status(200).json(cities);
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+exports.getFilteredCities = getFilteredCities;
