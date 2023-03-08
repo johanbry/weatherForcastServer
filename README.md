@@ -17,7 +17,8 @@
 * Mongoose 
 
 
-## Improvments
-> If we had more time we would like to add extra features
+## Frontend
+* [Visit repo](https://github.com/thereselinden/weatherForcast)
+* [See live](https://weatherappjt.netlify.app/)
 
 
