@@ -1,4 +1,4 @@
-# Weather forcast server
+# Weather Forecast API
 > This is a pair programming project done by me and [Johan Brynielsson](https://github.com/johanbry). The purpose of this project was to practice Vanilla Typescript outside original school projects. We are using MongoDB Atlas to store data fetched from the Geocodeing API. 
 
 
