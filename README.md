@@ -13,7 +13,7 @@
 ## Tech used
 * Typescript 
 * MongoDB Atlas
-* Express
+* Node/Express
 * Mongoose 
 
 
